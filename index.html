@@ -48,7 +48,7 @@
         }
         //function for calling API
         function callApi(cityName){
-            fetch('http://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid=051adc547b20894d70a00b6ae61580ca')
+            fetch('https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid=051adc547b20894d70a00b6ae61580ca')
             .then(response=>response.json())
             .then(data=>{
                 //getting city name
