@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+        #weather-details{
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="city-name" type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button onclick="inputHandle()" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div id="weather-details" class="weather-status text-white text-center">
+            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="city">Dhaka</h1>
+            <h3 ><span id="temp-celsius">38.06</span>&deg;C</h3>
+            <h1 id="weather" class="lead">Clouds</h1>
+        </div>
+    </div>
+    <script>
+        //function for handling submit button
+        function inputHandle(){
+            document.getElementById('weather-details').style.display='block';
+            const cityName=document.getElementById('city-name').value;
+            callApi(cityName);
+           
+        }
+        //function for calling API
+        function callApi(cityName){
+            fetch('http://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid=051adc547b20894d70a00b6ae61580ca')
+            .then(response=>response.json())
+            .then(data=>{
+                //getting city name
+            document.getElementById('city').innerText=data.name;
+            //getting city temperature
+            const tempKelvin= data.main.temp;
+            const tempCelsius=tempKelvin-273.15;
+            const newTemp=tempCelsius.toFixed(1);
+            //inserting temperature into website
+            document.getElementById('temp-celsius').innerText=newTemp;
+            //getting weather condition
+            const weatherCondition=data.weather[0].main;
+            document.getElementById('weather').innerText=weatherCondition;
+            })
+            //message for invalid city name
+            .catch(error=>{
+                alert('Invalid City Name');
+                document.getElementById('weather-details').style.display='none';
+            })
+        }
+
+        
+        
+    </script>
+</body>
+
+</html>
