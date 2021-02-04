@@ -32,7 +32,7 @@
             </div>
         </form>
         <div id="weather-details" class="weather-status text-white text-center">
-            <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <img id="weather-image" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
             <h1 id="city">Dhaka</h1>
             <h3 ><span id="temp-celsius">38.06</span>&deg;C</h3>
             <h1 id="weather" class="lead">Clouds</h1>
@@ -51,6 +51,7 @@
             fetch('https://api.openweathermap.org/data/2.5/weather?q='+cityName+'&appid=051adc547b20894d70a00b6ae61580ca')
             .then(response=>response.json())
             .then(data=>{
+                document.getElementById('weather-image').setAttribute('src','https://openweathermap.org/img/wn/'+data.weather[0].icon+'.png');
                 //getting city name
             document.getElementById('city').innerText=data.name;
             //getting city temperature
